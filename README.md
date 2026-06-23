@@ -1,29 +1,13 @@
-# TOEIC Flashcard One File v3
+# TOEIC Flashcard v5 Fixed
 
-Bản này chỉ cần 1 file index.html.
+Bản này lấy từ v3 đang chạy được và chỉ sửa đúng hàm nhận dạng chính tả.
 
-## Chức năng mới
-- Xóa thư mục tự tạo.
-- Import từ vựng bằng file Excel (.xlsx/.xls/.csv).
-- Có template Excel mẫu: toeic_vocab_import_template.xlsx.
+## Đã fix
+- Nếu đáp án là `I'm`, bạn gõ `im`, `I’m`, hoặc `i m` đều tính đúng.
+- Giữ nguyên các chức năng v3: xóa thư mục, import Excel, auto chạy, auto cuộn, thêm từ.
 
-## Cột Excel hỗ trợ
-- English: bắt buộc
-- Korean
-- Vietnamese
-- Topic
-- Part of speech
-- Folder
-
-Nếu thiếu cột Folder, từ sẽ được thêm vào thư mục đang chọn trong web app.
-
-## Cách cập nhật lên GitHub Pages
-1. Giải nén file ZIP.
-2. Lấy file index.html mới.
-3. Vào repository GitHub cũ.
-4. Upload file index.html mới để thay file cũ.
-5. Commit changes.
-6. Chờ 1-3 phút rồi mở lại link GitHub Pages.
-
-## Lưu ý
-Chức năng import Excel dùng thư viện SheetJS qua CDN. Lần đầu dùng cần có internet.
+## Cập nhật GitHub
+1. Giải nén ZIP.
+2. Upload file `index.html` mới lên repository, thay file cũ.
+3. Commit changes.
+4. Chờ 1-3 phút rồi mở lại link GitHub Pages.
