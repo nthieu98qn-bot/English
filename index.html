@@ -10,7 +10,7 @@
 </style>
 </head>
 <body>
-<header><h1>Study English by Nguyễn Trọng Hiếu</h1><p>Flashcard · Auto chạy · Quiz · Chính tả · Tự thêm thư mục/từ mới</p></header>
+<header><h1>TOEIC 600 v2</h1><p>Flashcard · Auto chạy · Quiz · Chính tả · Tự thêm thư mục/từ mới</p></header>
 <main>
 <section class="panel controls">
 <label>Thư mục<select id="folderSelect"></select></label>
@@ -100,16 +100,6 @@ const $=id=>document.getElementById(id);
 function loadJSON(k,d){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}catch(e){return d}}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(customWords));localStorage.setItem(FOLDER_KEY,JSON.stringify(customFolders))}
 function refresh(){vocab=[...DEFAULT_VOCAB,...customWords]}
-function normalize(t){
-  return String(t || "")
-    .trim()
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[’‘`´]/g, "'")
-    .replace(/'/g, "")
-    .replace(/&apos;/g, "")
-    .replace(/[^a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ\u00C0-\u024F]+/g, "");
-}]/g,"").replace(/\s+/g," ")}
 function normalize(t){return String(t||"").trim().toLowerCase().replace(/[.,!?;:()[\]{}]/g,"").replace(/\s+/g," ")}
 function esc(t){return String(t||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
 function escjs(t){return String(t||"").replaceAll("\\","\\\\").replaceAll("'","\\'").replaceAll("\n"," ")}
