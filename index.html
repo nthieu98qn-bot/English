@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TOEIC Flashcard v4</title>
+<title>TOEIC Flashcard v2</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:#f3f6fb;color:#111827}header{padding:22px 16px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:white;text-align:center}header h1{margin:0;font-size:28px}header p{margin:6px 0 0}main{max-width:840px;margin:auto;padding:14px}.panel{background:white;border:1px solid #d7deea;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 10px 25px rgba(15,23,42,.06)}label{font-weight:700;color:#6b7280;font-size:13px;display:grid;gap:5px}select,input,textarea,button{width:100%;font-size:16px;border-radius:13px;border:1px solid #d7deea;padding:12px}textarea{min-height:95px}button{background:#2563eb;color:white;border:0;font-weight:800;cursor:pointer}.secondary{background:#eef2f7;color:#111827;border:1px solid #d7deea}.good{background:#15803d}.bad{background:#dc2626}.controls,.grid2{display:grid;gap:10px}.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}.tab{background:#e5eaf3;color:#111827;padding:10px 5px;font-size:13px}.tab.active{background:#2563eb;color:white}.hidden{display:none!important}.progress{text-align:center;color:#6b7280;font-weight:800;margin-bottom:10px}.flashcard{min-height:280px;background:#eaf1ff;border:2px solid #bdd0ff;color:#111827;border-radius:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:22px}.card-main{font-size:clamp(30px,9vw,50px);font-weight:900;line-height:1.15;text-align:center}.card-sub{white-space:pre-line;color:#6b7280;font-size:18px;line-height:1.45;text-align:center}.tip{color:#6b7280;font-size:13px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.grid2{grid-template-columns:repeat(2,1fr);margin-top:10px}.full{margin-top:10px}#quizQuestion{text-align:center;font-size:34px}.center{text-align:center;color:#6b7280}.options{display:grid;gap:10px;margin-top:12px}.option{background:white;color:#111827;border:1px solid #d7deea;text-align:left}.correct{background:#dcfce7!important;color:#111827!important}.wrong{background:#fee2e2!important;color:#111827!important}.message,.score{text-align:center;font-weight:800}.dict-input{margin:12px 0;font-size:20px;text-align:center}.answer{display:none;margin-top:12px;padding:12px;background:#f8fafc;border:1px solid #d7deea;border-radius:14px;line-height:1.5}.answer.show{display:block}.word-list{display:grid;gap:10px;max-height:70vh;overflow-y:auto;scroll-behavior:smooth;padding-right:4px}.word-card{border:1px solid #d7deea;border-radius:14px;padding:12px;background:white}.word-top{display:flex;gap:8px;align-items:center;justify-content:space-between}.word-title{font-size:18px;font-weight:900}.word-detail{margin-top:6px;color:#6b7280;line-height:1.45}.word-card button{width:auto;padding:7px 10px}.small{font-size:13px;color:#6b7280;line-height:1.45}.notice{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:10px;border-radius:12px;margin-top:10px}.chipwrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chip{width:auto;background:#eef2f7;color:#111827;border:1px solid #d7deea;padding:8px 10px;border-radius:999px;font-size:14px}.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:800}.auto-box{background:#f8fafc;border:1px solid #d7deea;border-radius:14px;padding:12px;margin-top:12px}@media(min-width:720px){.controls{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.tabs{grid-template-columns:repeat(3,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-<header><h1>TOEIC 600 v4</h1><p>Flashcard · Auto chạy · Quiz · Chính tả · Tự thêm thư mục/từ mới</p></header>
+<header><h1>TOEIC 600 v2</h1><p>Flashcard · Auto chạy · Quiz · Chính tả · Tự thêm thư mục/từ mới</p></header>
 <main>
 <section class="panel controls">
 <label>Thư mục<select id="folderSelect"></select></label>
@@ -100,16 +100,7 @@ const $=id=>document.getElementById(id);
 function loadJSON(k,d){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}catch(e){return d}}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(customWords));localStorage.setItem(FOLDER_KEY,JSON.stringify(customFolders))}
 function refresh(){vocab=[...DEFAULT_VOCAB,...customWords]}
-function normalize(t){
-  return String(t || "")
-    .trim()
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[’‘`´]/g, "'")
-    .replace(/'/g, "")
-    .replace(/&apos;/g, "")
-    .replace(/[^a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ\u00C0-\u024F]+/g, "");
-}]/g,"").replace(/\s+/g," ")}
+function normalize(t){return String(t||"").trim().toLowerCase().replace(/[.,!?;:()[\]{}]/g,"").replace(/\s+/g," ")}
 function esc(t){return String(t||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
 function escjs(t){return String(t||"").replaceAll("\\","\\\\").replaceAll("'","\\'").replaceAll("\n"," ")}
 function speak(text,lang="en-US",rate=.9){if(!text||!("speechSynthesis" in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=rate;u.pitch=1;speechSynthesis.speak(u)}
